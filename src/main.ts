@@ -16,4 +16,6 @@ if (currentNumberOfDays !== lastSignNumberOfDays) {
   drawLottery();
   // 更新最近一次执行脚本的时间
   GM_setValue(storageKey, currentNumberOfDays);
+} else {
+  console.log("今日任务已完成~,去摸鱼吧");
 }

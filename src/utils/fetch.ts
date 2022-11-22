@@ -49,9 +49,8 @@ export async function checkIn() {
     return fetchData({
       url: "https://api.juejin.cn/growth_api/v1/check_in",
     }).then((response) => {
-      // console.log("签到后返回的数据==》data===>", response);
       if (response.err_msg === "success") {
-        alert("签到成功");
+        console.log("====签到成功=====");
       } else {
         console.log(response.err_msg);
       }
@@ -66,7 +65,7 @@ export async function drawLottery() {
       url: "https://api.juejin.cn/growth_api/v1/lottery/draw",
     }).then((response) => {
       if (response.err_msg === "success") {
-        console.log("恭喜您抽中:", response.data.lottery_name);
+        console.log("恭喜你今日抽中:", response.data.lottery_name);
       } else {
         console.log(response.err_msg);
       }
@@ -111,20 +110,21 @@ export async function bugfix() {
     }).then((response) => {
       if (response.err_msg === "success") {
         //console.log("未收集的bug列表==response===>", response);
-        //{"bug_type":14,"bug_time":1668787200}
-        //根据返回的结果组装数据来进行持续请求
+        //请求携带参数 {"bug_type":14,"bug_time":1668787200}
         const { data } = response;
+        let bugCount = 0;
         data.forEach((item: { bug_type: any; bug_time: any }) => {
           return fetchData({
             url: "https://api.juejin.cn/user_api/v1/bugfix/collect",
             data: { bug_type: item.bug_type, bug_time: item.bug_time },
           }).then((response) => {
             if (response.err_msg === "success") {
-              console.log("bug数+1===>");
+              bugCount++;
             } else {
               console.log("暂无bug可收集");
             }
           });
+          console.log("今日共收集", bugCount, " bug");
         });
       } else {
         alert(response.err_msg);

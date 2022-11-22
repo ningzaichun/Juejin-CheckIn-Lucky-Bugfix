@@ -1,6 +1,9 @@
 {
-  "@name": "JUEJIN-CHECKIN-LUCKY-BUG",
-  "@include": "*",
+  "@name": "Juejin-CheckIn-Lucky-Bug",
+  "@include": "https://juejin.cn/user/*",
+  "@version": "0.0.1",
+  "@description": "自动完成掘金每日签到、免费抽奖、沾福气、收集bug等任务,详细内容请阅读 README.md 文档",
+  "@author": "宁在春",
   "@run-at": "document-end",
   "@require": "https://code.jquery.com/jquery-3.6.0.min.js",
   "@match": "juejin.cn",

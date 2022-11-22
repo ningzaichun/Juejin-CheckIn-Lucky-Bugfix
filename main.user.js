@@ -1,16 +1,18 @@
 
 // ==UserScript==
-// @name         JUEJIN-CHECKIN-LUCKY-BUG
-// @namespace    juejin-check-lucky-bug
-// @version      0.0.0
-// @include      *
-// @run-at       document-end
-// @require      https://code.jquery.com/jquery-3.6.0.min.js
-// @match        juejin.cn
-// @connect      juejin.cn
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @grant        GM_xmlhttpRequest
+// @name           Juejin-CheckIn-Lucky-Bug
+// @namespace      juejin-check-lucky-bug
+// @version        0.0.1
+// @author         宁在春
+// @description    自动完成掘金每日签到、免费抽奖、沾福气、收集bug等任务,详细内容请阅读 README.md 文档
+// @include        https://juejin.cn/user/*
+// @run-at         document-end
+// @require        https://code.jquery.com/jquery-3.6.0.min.js
+// @match          juejin.cn
+// @connect        juejin.cn
+// @grant          GM_getValue
+// @grant          GM_setValue
+// @grant          GM_xmlhttpRequest
 // ==/UserScript==
 (function () {
   'use strict';
@@ -72,9 +74,8 @@
       return fetchData({
         url: "https://api.juejin.cn/growth_api/v1/check_in"
       }).then(response => {
-        // console.log("签到后返回的数据==》data===>", response);
         if (response.err_msg === "success") {
-          alert("签到成功");
+          console.log("====签到成功=====");
         } else {
           console.log(response.err_msg);
         }
@@ -88,7 +89,7 @@
         url: "https://api.juejin.cn/growth_api/v1/lottery/draw"
       }).then(response => {
         if (response.err_msg === "success") {
-          console.log("恭喜您抽中:", response.data.lottery_name);
+          console.log("恭喜你今日抽中:", response.data.lottery_name);
         } else {
           console.log(response.err_msg);
         }
@@ -135,8 +136,7 @@
       }).then(response => {
         if (response.err_msg === "success") {
           //console.log("未收集的bug列表==response===>", response);
-          //{"bug_type":14,"bug_time":1668787200}
-          //根据返回的结果组装数据来进行持续请求
+          //请求携带参数 {"bug_type":14,"bug_time":1668787200}
           const {
             data
           } = response;
@@ -148,9 +148,7 @@
                 bug_time: item.bug_time
               }
             }).then(response => {
-              if (response.err_msg === "success") {
-                console.log("bug数+1===>");
-              } else {
+              if (response.err_msg === "success") ; else {
                 console.log("暂无bug可收集");
               }
             });
@@ -176,6 +174,8 @@
     drawLottery();
     // 更新最近一次执行脚本的时间
     GM_setValue(storageKey, currentNumberOfDays);
+  } else {
+    console.log("今日任务已完成~,去摸鱼吧");
   }
 
 })();
